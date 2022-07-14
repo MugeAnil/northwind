@@ -5,6 +5,7 @@ import { ThisReceiver } from '@angular/compiler';
 import { ProductService } from 'src/app/services/product.service';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'app-product',
@@ -19,7 +20,7 @@ export class ProductComponent implements OnInit {
   filterText="" ;
 
   constructor(private productService:ProductService,private activatedRoute:ActivatedRoute,
-    private toastrService:ToastrService) { }
+    private toastrService:ToastrService, private cartService:CartService) { }
 
   ngOnInit(): void {
     //this.getProducts();
@@ -50,6 +51,7 @@ export class ProductComponent implements OnInit {
       this.toastrService.error("Sepete eklenemedi",product.productName);
     } else {
       this.toastrService.success("Sepete Eklendi",product.productName);
+      this.cartService.addToCart(product);
     }
     
   }
